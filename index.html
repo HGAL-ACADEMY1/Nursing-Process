@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HGAL Academy: The Nursing Process</title>
+    
+    <!-- Google Fonts: Merriweather for text, Poppins for UI elements -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET & BASIC SETUP --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #121212; /* Deep charcoal/black */
+            color: #E0E0E0; /* High contrast off-white */
+            font-family: 'Merriweather', serif;
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- SCROLL PROGRESS BAR --- */
+        #progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FFC107, #FF9800); /* Golden pop color */
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 20px 100px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px; /* Space between "messages" */
+        }
+
+        /* --- LOGO SECTION --- */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            opacity: 0; /* For animation */
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        .logo {
+            max-width: 100%;
+            width: 350px; /* Large visibility as requested */
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.1));
+        }
+
+        .welcome-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- TYPOGRAPHY & TEXT BLOCKS --- */
+        p {
+            font-size: 26px; /* Requested size */
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+
+        /* Keywords highlighting */
+        strong {
+            color: #ffffff;
+            font-weight: 900;
+        }
+
+        .highlight {
+            color: #FFD54F; /* Soft Gold for emphasis */
+            font-weight: 700;
+        }
+
+        .academic-term {
+            color: #64B5F6; /* Soft Blue for definitions */
+            font-weight: 700;
+            border-bottom: 2px solid rgba(100, 181, 246, 0.3);
+        }
+
+        .transition-phrase {
+            color: #81C784; /* Soft Green for transitions */
+            font-family: 'Poppins', sans-serif; /* Distinct font for transitions */
+            font-weight: 600;
+            font-size: 22px;
+            display: block;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- ANIMATION CLASSES --- */
+        /* Elements start hidden and pushed down */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+
+        /* JavaScript adds this class to make them pop up */
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- VIP SECTION --- */
+        .vip-section {
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(145deg, #1e1e1e, #252525);
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .vip-text {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .vip-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #E91E63, #9C27B0);
+            color: white;
+            padding: 15px 40px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+            animation: pulse 2s infinite;
+            transition: transform 0.2s;
+        }
+
+        .vip-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- ANIMATION KEYFRAMES --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(233, 30, 99, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(233, 30, 99, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(233, 30, 99, 0); }
+        }
+
+        /* --- MOBILE ADJUSTMENTS --- */
+        @media (max-width: 600px) {
+            p {
+                font-size: 20px; /* Slightly smaller for mobile screens but still big */
+            }
+            .container {
+                padding: 10px;
+            }
+            .logo {
+                width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scroll Progress Bar -->
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="container">
+        
+        <!-- Branding -->
+        <header class="header">
+            <img src="https://i.imgur.com/eP0BFrd.png" alt="HGAL Academy Logo" class="logo">
+            <div class="welcome-text">Lecture Series</div>
+        </header>
+
+        <!-- LECTURE CONTENT STARTS HERE -->
+
+        <div class="reveal">
+            <p>👋 Hello there! Welcome to class.</p>
+            <p>Today, we are going to explore something that is the absolute "skeleton" of nursing. Without this, nursing would just be guessing! 🧩</p>
+            <p>We are talking about the <span class="academic-term">Nursing Process</span>.</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Let's start with a definition...</span>
+            <p>Imagine you want to build a LEGO castle. You don't just throw bricks at the floor, right? No! You need a plan. 🏗️</p>
+            <p>The <span class="academic-term">Nursing Process</span> is exactly that—a systematic, rational method of planning and providing individualized nursing care.</p>
+            <p>Its purpose is very clear: To identify a client’s health status (how are they doing?), find their actual or potential health problems, make a plan to fix those problems, and then actually deliver the specific nursing care needed. 💊✨</p>
+            <p>And remember, a "client" isn't just one person. It could be an individual, a family, a whole community, or a group.</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">A little bit of history...</span>
+            <p>Who came up with this brilliant idea? 🤔</p>
+            <p>A lady named <strong>Hall</strong> originated the term "nursing process" way back in <strong>1955</strong>. That’s a long time ago!</p>
+            <p>Later on, other pioneers like <strong>Johnson (1959)</strong>, <strong>Orlando (1961)</strong>, and <strong>Wiedenbach (1963)</strong> were among the first to use it to describe the phases of nursing practice. 📚</p>
+            <p>Since then, various nurses have described the process of nursing and organized the phases in different ways, but the core idea remains the same.</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Now, let’s look at its Characteristics...</span>
+            <p>The nursing process isn't just a boring list. It has a special "personality" or characteristics that let nurses handle a patient's changing health. 🌟</p>
+            <p>Let's break them down simply:</p>
+            <p>1️⃣ <strong>Cyclic and Dynamic:</strong> Imagine a bicycle wheel. 🚲 Data from one phase feeds into the next. Findings from the evaluation phase feed back into assessment. It is a regularly repeated event (a cycle) that is continuously changing (dynamic) rather than staying static (stuck in one place).</p>
+            <p>2️⃣ <strong>Client Centered:</strong> This is huge! The nurse organizes the plan of care according to the <em>client's</em> problems, not just what the nurse feels like doing. We check the client's habits and routines to make the care plan fit <em>them</em> perfectly. 👔</p>
+            <p>3️⃣ <strong>Problem Solving:</strong> It’s basically the scientific method (problem solving) adapted for nurses. It runs parallel to the medical model (what doctors use), but it is separate.</p>
+            <p>4️⃣ <strong>Decision Making:</strong> Nurses are smart! 🧠 Decision making happens in every single phase. We aren't robots bound by standard responses; we use creativity, skills, and knowledge to help clients.</p>
+            <p>5️⃣ <strong>Interpersonal and Collaborative:</strong> We have to talk to people! It requires direct communication with clients and families. Plus, we collaborate (work together) with the whole health care team. 🤝</p>
+            <p>6️⃣ <strong>Universal Applicability:</strong> This means it works <em>everywhere</em>—hospitals, clinics, homes—and with clients of <em>all</em> ages. 🌍</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Okay, let's now move on to...</span>
+            <p>The <span class="academic-term">Phases of the Nursing Process</span>. This is the step-by-step recipe.</p>
+            <p>Depending on who you ask, there are either 5 or 6 phases:</p>
+            <p>🔹 <strong>The ANA (2010) says 6 phases:</strong> Assessment, Diagnosis, Outcomes Identification, Planning, Implementation, and Evaluation.</p>
+            <p>🔹 <strong>The NCLEX (your big exam!) uses 5 phases:</strong> Assessment, Analysis, Planning, Implementation, and Evaluation.</p>
+            <p>Most people use the classic 5 steps: <strong>Assessing, Diagnosing, Planning, Implementing, and Evaluating.</strong></p>
+        </div>
+
+        <div class="reveal">
+            <p>⚠️ <strong>Important Note:</strong> These phases overlap! They aren't separate boxes. For example, while you are giving medicine (Implementation), you are also checking if the patient looks pale (Assessment). It's all connected!</p>
+            <p>If you mess up the first step (Assessment), your Diagnosis will be wrong, and your Plan will fail. It's like buttoning a shirt—if you miss the first button, the whole shirt is crooked! 👔❌</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Let's dive deep into Step 1: Assessment</span>
+            <p>🕵️‍♀️ <strong>Assessment</strong> is the systematic and continuous collection, organization, validation, and documentation of data.</p>
+            <p>Think of yourself as a detective. You are gathering clues. This happens continuously. Even during evaluation, you are assessing to see if your plan worked.</p>
+            <p>There are four types of assessments you should know:</p>
+            <p>1. <strong>Initial Nursing Assessment:</strong> The very first check-up.</p>
+            <p>2. <strong>Problem Focused Assessment:</strong> Zooming in on one specific issue (like a hurt leg).</p>
+            <p>3. <strong>Emergency Assessment:</strong> Crisis mode! 🚑</p>
+            <p>4. <strong>Time-lapsed Reassessment:</strong> Checking in after some time has passed.</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Why do we assess?</span>
+            <p>To establish a database about the client's physical, emotional, and social health. We want to find their strengths (like a supportive family or good coping skills) and their problems.</p>
+            <p>This is also where we become friends with the client (Therapeutic Relationship) and let them talk about their goals. 🗣️</p>
+            <p>The essential elements here are: <strong>Collection, Verification, Organization, Interpretation, and Documentation.</strong></p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Next, we look at Step 2: Nursing Diagnosis</span>
+            <p>Once you have the clues (data), you have to figure out what they mean. 🧐</p>
+            <p>The <span class="academic-term">Nursing Diagnosis</span> is a clinical judgment about a person's response to health conditions. It’s different from a medical diagnosis (which identifies a disease). A nursing diagnosis identifies how the patient is <em>responding</em> to that disease.</p>
+            <p>We use this to communicate with other nurses. It gives us a common language!</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">A quick history lesson...</span>
+            <p>The term has been around since the 1950s (thanks, Fry, 1953!). But it took a while to catch on. In 1973, nurses met to classify these diagnoses, and by 1982, the group was renamed <strong>NANDA</strong> (North American Nursing Diagnosis Association). They are the "bosses" of nursing diagnosis! 📘</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Why is this important?</span>
+            <p><strong>Professionalism:</strong> Having our own unique knowledge makes nursing a true profession. 🎓</p>
+            <p><strong>Communication:</strong> It creates a "mutual vocabulary" so nurses, doctors, and computers can all understand the patient's needs clearly.</p>
+            <p><strong>Holistic Care:</strong> The NANDA list helps us treat the <em>whole</em> person, not just the body part that hurts.</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Let's break down the Components...</span>
+            <p>A nursing diagnosis is made of pieces:</p>
+            <p>🔸 <strong>Label:</strong> The name of the diagnosis (e.g., "Anxiety").</p>
+            <p>🔸 <strong>Definition:</strong> Describes what it is.</p>
+            <p>🔸 <strong>Defining Characteristics:</strong> The clues you see (signs and symptoms).</p>
+            <p>🔸 <strong>Risk Factors:</strong> Things that make a problem more likely to happen.</p>
+            <p>🔸 <strong>Related Factors:</strong> What is causing or linked to the problem.</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">How do we write it? The Statements.</span>
+            <p>There are two main ways to write a diagnosis. Think of this as grammar for nurses. ✍️</p>
+            <p><strong>1. The Two-Part Statement (NANDA Style)</strong></p>
+            <p>This is short and sweet. It includes:</p>
+            <p>🅰️ <strong>Problem Statement (Label):</strong> The issue (e.g., Disturbed Body Image).</p>
+            <p>🅱️ <strong>Etiology:</strong> The cause or related factor.</p>
+            <p>We join them with the words <strong>"Related To" (RT)</strong>.</p>
+            <p><em>Example:</em> "Disturbed body image <strong>RT</strong> loss of left lower extremity."</p>
+            <p>We can also add modifiers like "Ineffective," "Impaired," or "Risk for" to make it specific.</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">At this point, it's important to consider...</span>
+            <p><strong>2. The Three-Part Statement</strong></p>
+            <p>Some nurses like to be extra detailed! They add a third part. This format is:</p>
+            <p>🅰️ <strong>Label</strong> + 🅱️ <strong>Etiology</strong> + 🆎 <strong>Defining Characteristics</strong> (Signs & Symptoms).</p>
+            <p>We connect the third part using <strong>"As Evidenced By" (AEB)</strong>.</p>
+            <p>So it looks like: <em>Problem</em>... caused by... <em>Etiology</em>... shown by... <em>Signs/Symptoms</em>.</p>
+            <p>NANDA provides lists of these defining characteristics to help us verify our diagnosis. While some nurses love the 3-part statement for its detail, others prefer the 2-part statement for being quick and precise.</p>
+        </div>
+
+        <!-- NEWLY ADDED SECTIONS START HERE -->
+
+        <div class="reveal">
+            <span class="transition-phrase">Let's now dive into...</span>
+            <p>The different <span class="academic-term">Categories of Nursing Diagnoses</span>. Think of these as different flavors of health statuses. 🍦</p>
+            
+            <p>1️⃣ <strong>Actual Diagnoses:</strong> These are problems that are happening <em>right now</em>. They are already here! <br>
+            <em>Example:</em> Fluid overload or Anxiety. The rain is already falling. 🌧️</p>
+            
+            <p>2️⃣ <strong>Risk Diagnoses:</strong> Think of this as a warning sign! ⚠️ The problem hasn't happened yet, but the client is "vulnerable." <br>
+            <em>Example:</em> Risk for poisoning (maybe a baby is crawling near cleaning supplies). It’s cloudy, but not raining yet!</p>
+            
+            <p>3️⃣ <strong>Health Promotion Diagnoses:</strong> This identifies behaviors that show a desire to increase well-being.</p>
+            
+            <p>4️⃣ <strong>Wellness Diagnoses:</strong> This is when a client is already healthy but wants to get <em>even better</em>. <br>
+            <em>Note:</em> These are special! They don't use "Related To." We just say "Readiness for enhanced..." <br>
+            <em>Example:</em> Readiness for enhanced community coping. 💪</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Now that we understand this, let's talk about Step 3...</span>
+            <p><span class="academic-term">Planning and Outcome Identification</span>. 📝</p>
+            <p>Imagine planning a birthday party. You can't just hope a cake appears. You need a plan! The ANA (2004) says planning is essential for competent nursing.</p>
+            <p>After we find the problems (Diagnosis), we make a plan of action. This improves communication so all nurses know what to do!</p>
+            <p>There are four critical elements to Planning:</p>
+            <p>🔸 Establishing priorities (What do we do first?)</p>
+            <p>🔸 Setting goals and expected outcomes</p>
+            <p>🔸 Planning nursing interventions</p>
+            <p>🔸 Documenting nursing care</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">First: Establishing Priorities</span>
+            <p>We can't do everything at once! We have to rank the diagnoses. Which one is life-threatening? Which one is psychological?</p>
+            <p>💡 <strong>Pro Tip:</strong> Do this WITH the client! When you share decision-making power, the client feels motivated and in control. "Teamwork makes the dream work!"</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Next: Goals and Expected Outcomes</span>
+            <p>What is the difference? 🤔</p>
+            <p>🎯 <strong>Goal:</strong> A broad, big-picture aim. Example: "The client will walk again."</p>
+            <p>📋 <strong>Expected Outcome:</strong> A detailed, specific step. Example: "The client will walk 10 feet by Tuesday."</p>
+            <p>We have <strong>Short-term goals</strong> (hours or days) and <strong>Long-term goals</strong> (weeks or months). Be careful! If you get the cause of the problem wrong, your goal won't be met.</p>
+            <p>Outcomes must be: <strong>Realistic</strong>, <strong>Mutually desired</strong> (client wants it too!), and <strong>Attainable</strong> in a specific time.</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Then: Planning Interventions</span>
+            <p>Now we choose our weapons! ⚔️ A <span class="academic-term">Nursing Intervention</span> is an action the nurse performs to help the client reach those goals.</p>
+            <p>We use science and critical thinking to pick the best ones. If one doesn't work, we need backup plans!</p>
+            <p><em>Example:</em> If the diagnosis is "Pain related to heart problems," the intervention is "Help the client rest to save energy." Simple, right?</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">Next, we'll look at Step 4: Implementation</span>
+            <p>Action time! 🎬 <span class="academic-term">Implementation</span> is the "doing" phase. We execute the plan we just made.</p>
+            <p>To do this well, you need three types of skills:</p>
+            <p>🧠 <strong>Cognitive Skills (The Brain):</strong> You need to understand the "why" behind what you are doing. You need to analyze data and use your knowledge.</p>
+            <p>✋ <strong>Psychomotor Skills (The Hands):</strong> You need to be good with your hands! This means knowing how to use equipment, give injections, or move a patient safely.</p>
+            <p>🗣️ <strong>Interpersonal Skills (The Voice):</strong> You need to communicate! This builds a therapeutic relationship with the patient and helps you work with the whole medical team.</p>
+        </div>
+
+        <div class="reveal">
+            <span class="transition-phrase">And finally, Step 5: Evaluation</span>
+            <p>Did it work? 🤷‍♂️ <span class="academic-term">Evaluation</span> is where we see if the goals were met, partially met, or not met at all.</p>
+            <p>This isn't just the end; it's also a new beginning! If the plan didn't work, we go back to the start and figure out why. It ensures quality care and accountability.</p>
+            <p><strong>Evaluation Components:</strong> It is a fluid process. It depends on all the other steps. If your assessment was wrong, your evaluation will show failure.</p>
+            <p><strong>Techniques:</strong> Use your senses! 👀👂 What do you see? What do you hear? Are there subtle changes in the patient's behavior? You have to be a sharp observer!</p>
+            <p>And that brings us to the end of our journey through the Nursing Process! 🏁</p>
+        </div>
+
+        <!-- VIP NOTICE SECTION (CONTINUOUS) -->
+        <div class="reveal">
+            <div class="vip-section">
+                <p class="vip-text">
+                    💎 <strong>Wait! Before you go!</strong> 💎<br><br>
+                    Join our VIP if you're yet to, for more study materials and other bonuses (worth #115,000)!
+                </p>
+                <p>For more details click below 👇</p>
+                
+                <a href="https://tinyurl.com/2dbtvx2b" target="_blank" class="vip-btn">
+                    Click Here
+                </a>
+            </div>
+        </div>
+
+    </div> <!-- End Container -->
+
+    <script>
+        // --- SCROLL PROGRESS BAR LOGIC ---
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // --- SCROLL ANIMATION LOGIC (INTERSECTION OBSERVER) ---
+        // This makes text "pop" or "fade up" as you scroll down
+        document.addEventListener("DOMContentLoaded", function() {
+            let observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            };
+
+            let observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
+
+            let elements = document.querySelectorAll('.reveal');
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+          </html>
